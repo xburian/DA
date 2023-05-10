@@ -75,7 +75,7 @@ async function getMovie(conversation){
 //     fetch('https://api.twilio.com/2010-04-01/Accounts/AC75b3be0f930ea2b11ef667cd852f2656/Messages.json', {
 //         method: 'POST',
 //         headers: {
-//             'Authorization': 'Basic ' + btoa('AC75b3be0f930ea2b11ef667cd852f2656:40363a4a9ddac5f1328807ebc45d0c69')
+//             'Authorization': 'Basic ' +
 //         },
 //         body: new URLSearchParams({
 //             'To': number,
