@@ -70,6 +70,22 @@ async function getMovie(conversation){
     return response.json();
 }
 
+// const sendMessage = (number, body) => {
+//     fetch('https://api.twilio.com/2010-04-01/Accounts/AC75b3be0f930ea2b11ef667cd852f2656/Messages.json', {
+//         method: 'POST',
+//         headers: {
+//             'Authorization': 'Basic ' +
+//         },
+//         body: new URLSearchParams({
+//             'To': number,
+//             'From': '+14753488263',
+//             'Body': body
+//         })
+//     });
+// }
+
+// sendMessage('+420776655577', 'The Bourne Identity (2002)')
+
 
 // await getMovie(`
 // \`\`\`
