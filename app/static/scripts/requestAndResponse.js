@@ -1,4 +1,3 @@
-const TOKEN = "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";
 const getBotResponse = (input) => {
     //rock paper scissors
     if (input === "rock") {
@@ -58,7 +57,7 @@ async function getMovie(conversation){
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${TOKEN}`
+            'Authorization': `Bearer ${OPENAI_API_KEY}`
         },
         body: JSON.stringify({
             model: "text-davinci-003",
