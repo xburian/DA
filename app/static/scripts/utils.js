@@ -110,10 +110,9 @@ function getResponse() {
 
                 const response = await getMovie(conversation).then(d => d.choices[0].text);
                 renderResponse("Recommendation for you is: " + response)
+                // sendMessage("Recommendation for you is: " + response)
 
                 isRecommendationActivated = false;
-                // questions = getQuestions();
-
 
             }
 
