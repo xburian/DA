@@ -17,7 +17,14 @@ for (let i = 0; i < COLL.length; i++) {
     });
 }
 
-const sendButton = () => getResponse()
+const sendButton = () => {
+    const textInput = $("#textInput");
+    let userText = textInput.val();
+
+    if (userText) {
+        getResponse()
+    }
+}
 const heartButton = () => buttonSendText("Heart clicked!")
 
 runChatBot();

@@ -2,6 +2,8 @@ let answeredQuestions = [];
 let questions = getQuestions();
 let isRecommendationActivated = false;
 let isFirstActivation = true;
+let sendingToMobilePhoneActivated = false;
+let chatResponse = null;
 
 const getTime = () => {
     const today = new Date();
@@ -80,7 +82,7 @@ function getResponse() {
     setTimeout(async () => {
 
         if (isRecommendationActivated) {
-            if (questions !== undefined && questions.length > 1) {
+            if (questions !== undefined && questions.length > 0) {
                 const question = questions.shift();
                 renderResponse(question);
 
@@ -109,20 +111,45 @@ function getResponse() {
                 console.log(conversation)
 
                 const response = await getMovie(conversation).then(d => d.choices[0].text);
-                renderResponse("Recommendation for you is: " + response)
-                // sendMessage("Recommendation for you is: " + response)
-
+                const fixedResponse = response.replace("```", "");
+                renderResponse("Recommendation for you is: " + fixedResponse)
                 isRecommendationActivated = false;
 
+                renderResponse("Want to send it to your mobile phone? if yes, write to which number or write no.")
+                sendingToMobilePhoneActivated = true
+                chatResponse = fixedResponse;
+
             }
+
+        } else if (sendingToMobilePhoneActivated) {
+
+            const containsNo = isContainsNo(userText);
+            console.log('containsNo', containsNo);
+            if (!containsNo && chatResponse) {
+                sendMessage('+420' + userText, "Recommendation for you is: " + chatResponse)
+                renderResponse("The recommendation has been sent to your phone... :)")
+            } else {
+                renderResponse("Ok, thx for everything")
+            }
+
+            resetChatBot()
 
         } else {
 
             getHardResponse(userText);
-
         }
+
     }, 1000)
 
+}
+
+const resetChatBot = () => {
+    answeredQuestions = [];
+    questions = getQuestions();
+    isRecommendationActivated = false;
+    isFirstActivation = true;
+    sendingToMobilePhoneActivated = false;
+    chatResponse = null;
 }
 
 // Handles sending text via button clicks

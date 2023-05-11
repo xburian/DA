@@ -30,10 +30,16 @@ const getQuestions = () => {
 
 const MOVIE = "movie"
 const FILM = "film"
+const NO = "no"
 
 const isStartingQuestions = (userInput) => {
     userInput = userInput.toLowerCase();
     return userInput.includes(MOVIE) || userInput.includes(FILM);
+}
+
+const isContainsNo = (userInput) => {
+    userInput = userInput.toLowerCase();
+    return userInput.includes(NO);
 }
 
 const prepareConversation = (conversation) => {
@@ -49,7 +55,7 @@ const prepareConversation = (conversation) => {
     return text;
 }
 
-async function getMovie(conversation){
+async function getMovie(conversation) {
     const conversation_prefix = "Give me a movie based on this conversation";
     let result;
 
@@ -70,35 +76,16 @@ async function getMovie(conversation){
     return response.json();
 }
 
-// const sendMessage = (number, body) => {
-//     fetch('https://api.twilio.com/2010-04-01/Accounts/AC75b3be0f930ea2b11ef667cd852f2656/Messages.json', {
-//         method: 'POST',
-//         headers: {
-//             'Authorization': 'Basic ' +
-//         },
-//         body: new URLSearchParams({
-//             'To': number,
-//             'From': '+14753488263',
-//             'Body': body
-//         })
-//     });
-// }
-
-// sendMessage('+420776655577', 'The Bourne Identity (2002)')
-
-
-// await getMovie(`
-// \`\`\`
-// A: Give me a movie
-// B: Ok, tell me something about yourself How old are you?
-// A: 29
-// B: What gender do you identify as?
-// A: Male
-// B: Do you have any hobbies?
-// A: Skiing
-// B: Do you have any pets or favourite animals?
-// A: I have a cat
-// B: Do you like adrenaline?
-// A: No
-// \`\`\`
-// `).then(d => d.choices[0].text)
+function sendMessage(number, body) {
+    fetch(`https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Basic ' + btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_API_KEY}`)
+        },
+        body: new URLSearchParams({
+            'To': number,
+            'From': '+14753488263',
+            'Body': body
+        })
+    });
+}
