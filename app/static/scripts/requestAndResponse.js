@@ -66,7 +66,7 @@ async function getMovie(conversation) {
         body: JSON.stringify({
             model: "text-davinci-003",
             prompt: conversation_prefix + conversation,
-            max_tokens: 10,
+            max_tokens: 20,
             n: 1,
             stop: ['\n']
         })
