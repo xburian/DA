@@ -28,18 +28,17 @@ const getQuestions = () => {
     ]
 }
 
-const MOVIE = "movie"
-const FILM = "film"
-const NO = "no"
+const STARTING_INPUTS = ["movie", "move", "muvie", "novie", "mobie", "movir", "novir", "moive", "film", "flim", "filn", "folm"]
+const FLEXIBLE_NO = ["no", "nah", "nope", "not really"]
 
 const isStartingQuestions = (userInput) => {
     userInput = userInput.toLowerCase();
-    return userInput.includes(MOVIE) || userInput.includes(FILM);
+    return STARTING_INPUTS.some(PROMPT => userInput.includes(PROMPT));
 }
 
 const isContainsNo = (userInput) => {
     userInput = userInput.toLowerCase();
-    return userInput.includes(NO);
+    return FLEXIBLE_NO.some(NO => userInput.includes(NO))
 }
 
 const prepareConversation = (conversation) => {
@@ -51,13 +50,12 @@ const prepareConversation = (conversation) => {
 
     text = `\`\`\` ${text} \`\`\``;
 
-    console.log(text)
+    // console.log(text)
     return text;
 }
 
 async function getMovie(conversation) {
     const conversation_prefix = "Give me a movie based on this conversation";
-    let result;
 
     const response = await fetch('https://api.openai.com/v1/completions', {
         method: 'POST',
@@ -77,6 +75,9 @@ async function getMovie(conversation) {
 }
 
 function sendMessage(number, body) {
+    if (!number.startsWith('+') || number.length < 9 && number.length > 9) {
+        number = '+420' + number;
+    }
     fetch(`https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`, {
         method: 'POST',
         headers: {

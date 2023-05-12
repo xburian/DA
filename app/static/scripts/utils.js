@@ -63,10 +63,6 @@ function getResponse() {
     const textInput = $("#textInput");
     let userText = textInput.val();
 
-    // if (userText === "") {
-    //     userText = "I love Code Palace!";
-    // }
-
     const isStartingQuestion = isStartingQuestions(userText);
     if (isStartingQuestion) {
         isRecommendationActivated = true;
@@ -126,7 +122,7 @@ function getResponse() {
             const containsNo = isContainsNo(userText);
             console.log('containsNo', containsNo);
             if (!containsNo && chatResponse) {
-                sendMessage('+420' + userText, "Recommendation for you is: " + chatResponse)
+                sendMessage(userText, "Recommendation for you is: " + chatResponse)
                 renderResponse("The recommendation has been sent to your phone... :)")
             } else {
                 renderResponse("Ok, thx for everything")
