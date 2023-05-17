@@ -108,7 +108,7 @@ function getResponse() {
 
                 const response = await getMovie(conversation).then(d => d.choices[0].text);
                 const fixedResponse = response.replace("```", "");
-                renderResponse("Recommendation for you is: " + fixedResponse)
+                renderResponse("Recommendation for you is: " + splitMovies(fixedResponse))
                 isRecommendationActivated = false;
 
                 renderResponse("Want to send it to your mobile phone? if yes, write to which number or write no.")

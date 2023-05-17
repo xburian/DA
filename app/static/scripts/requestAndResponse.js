@@ -1,3 +1,8 @@
+const CHAT_GPT_CONVERSATION_PREFIX = "Give me 3 movies based on this conversation, each separated by a comma";
+const CSFD_URL_QUERY = "https://www.csfd.cz/hledat/?q=";
+const STARTING_INPUTS = ["movie", "move", "muvie", "novie", "mobie", "movir", "novir", "moive", "film", "flim", "filn", "folm"]
+const FLEXIBLE_NO = ["no", "nah", "nope", "not really"]
+
 const getBotResponse = (input) => {
     //rock paper scissors
     if (input === "rock") {
@@ -28,9 +33,6 @@ const getQuestions = () => {
     ]
 }
 
-const STARTING_INPUTS = ["movie", "move", "muvie", "novie", "mobie", "movir", "novir", "moive", "film", "flim", "filn", "folm"]
-const FLEXIBLE_NO = ["no", "nah", "nope", "not really"]
-
 const isStartingQuestions = (userInput) => {
     userInput = userInput.toLowerCase();
     return STARTING_INPUTS.some(PROMPT => userInput.includes(PROMPT));
@@ -50,12 +52,10 @@ const prepareConversation = (conversation) => {
 
     text = `\`\`\` ${text} \`\`\``;
 
-    // console.log(text)
     return text;
 }
 
 async function getMovie(conversation) {
-    const conversation_prefix = "Give me a movie based on this conversation";
 
     const response = await fetch('https://api.openai.com/v1/completions', {
         method: 'POST',
@@ -65,7 +65,7 @@ async function getMovie(conversation) {
         },
         body: JSON.stringify({
             model: "text-davinci-003",
-            prompt: conversation_prefix + conversation,
+            prompt: CHAT_GPT_CONVERSATION_PREFIX + conversation,
             max_tokens: 20,
             n: 1,
             stop: ['\n']
@@ -89,4 +89,15 @@ function sendMessage(number, body) {
             'Body': body
         })
     });
+}
+
+const splitMovies = (movies) => {
+    if (movies.length === 0) return "Nothing here";
+
+    return movies
+        .split(",")
+        .map(movie => {
+            const url = `<a href=\"${CSFD_URL_QUERY}${movie}\" target=\"_blank\">` + 'link' + '</a>';
+            return `${movie} ${url} \n`
+        });
 }
