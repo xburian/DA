@@ -31,7 +31,7 @@ runChatBot();
 
 // Press enter to send a message
 $("#textInput").keypress(function (e) {
-    if (e.which === 13) {
+    if (e.which === 13 && $('#textInput').val()) {
         getResponse();
     }
 });
