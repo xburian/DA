@@ -111,6 +111,8 @@ function getResponse() {
                 renderResponse("Recommendation for you is: " + splitMovies(fixedResponse))
                 isRecommendationActivated = false;
 
+                redirect();
+
                 renderResponse("Want to send it to your mobile phone? if yes, write to which number or write no.")
                 sendingToMobilePhoneActivated = true
                 chatResponse = fixedResponse;

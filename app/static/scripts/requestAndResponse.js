@@ -97,7 +97,18 @@ const splitMovies = (movies) => {
     return movies
         .split(",")
         .map(movie => {
-            const url = `<a href=\"${CSFD_URL_QUERY}${movie}\" target=\"_blank\">` + movie + '</a>';
+            const url = '<a class="movieLink" value="'+ movie +'" href="#">' + movie + '</a>';
             return `${url} \n`
         });
+}
+
+function redirect(){
+    $('.movieLink').each(
+        function() {
+            $(this).click(function () {
+                console.log($(this).attr('value'))
+                $('iframe').attr('src', CSFD_URL_QUERY + $(this).attr('value'))
+            })
+        }
+    )
 }
