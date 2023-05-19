@@ -97,7 +97,7 @@ const splitMovies = (movies) => {
     return movies
         .split(",")
         .map(movie => {
-            const url = `<a href=\"${CSFD_URL_QUERY}${movie}\" target=\"_blank\">` + 'link' + '</a>';
-            return `${movie} ${url} \n`
+            const url = `<a href=\"${CSFD_URL_QUERY}${movie}\" target=\"_blank\">` + movie + '</a>';
+            return `${url} \n`
         });
 }
